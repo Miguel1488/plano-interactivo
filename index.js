@@ -11,7 +11,7 @@ const casas = document.querySelectorAll('path'); // Selecciona todas las "casas"
 let isAdmin = false; // Variable que simula si el usuario es administrador o no
 
 // Cargar el estado guardado desde localStorage cuando se carga la página
-window.addEventListener('load', () => {
+document.addEventListener('DOMContentLoaded', () => {
     casas.forEach((casa, index) => {
         const estadoGuardado = localStorage.getItem(`casa_${index}`);
         const bloqueada = localStorage.getItem(`bloqueada_${index}`);
