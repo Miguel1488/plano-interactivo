@@ -21,7 +21,8 @@ body {
 
 .h1 {
     color: #0D6EFD;
-    font: size 45px;
+    font-size: clamp(10px, 5vw, 48px); /* Texto fluido con un tamaño mínimo y máximo */
+
     ;
     font-weight: 1000;
     /* El número puede variar de 100 a 900, siendo 900 el más grueso. */
@@ -31,3 +32,29 @@ body {
     -2px 2px 0 #ffffff,   /* Sombra hacia abajo a la izquierda */
     2px 2px 0 #ffffff;    /* Sombra hacia abajo a la derecha */
 }
+@media (max-width: 768px) {
+    h1 {
+      font-size: 36px; /* Ajuste para pantallas medianas (tablets) */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 24px; /* Ajuste para pantallas pequeñas (móviles) */
+    }
+  }
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  /* Elementos hijos */
+  .item {
+    flex: 1 1 200px; /* Crece, se encoge y tiene un tamaño mínimo de 200px */
+    margin: 10px;
+   
+    padding: 20px;
+    text-align: center;
+  }
