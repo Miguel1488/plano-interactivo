@@ -12,61 +12,76 @@ let isAdmin = false; // Variable que simula si el usuario es administrador o no
 
 // Cargar el estado guardado desde localStorage cuando se carga la página
 document.addEventListener('DOMContentLoaded', () => {
-    casas.forEach((casa, index) => {
-        const estadoGuardado = localStorage.getItem(`casa_${index}`);
-        const bloqueada = localStorage.getItem(`bloqueada_${index}`);
+    try {
+        casas.forEach((casa, index) => {
+            const estadoGuardado = localStorage.getItem(`casa_${index}`);
+            const bloqueada = localStorage.getItem(`bloqueada_${index}`);
 
-        if (estadoGuardado) {
-            casa.classList.remove('disponible', 'vendido', 'reservado');
-            casa.classList.add(estadoGuardado);
-            casa.setAttribute('data-status', estadoGuardado);
-        }
+            if (estadoGuardado) {
+                casa.classList.remove('disponible', 'vendido', 'reservado');
+                casa.classList.add(estadoGuardado);
+                casa.setAttribute('data-status', estadoGuardado);
+            }
 
-        if (bloqueada === 'true') {
-            casa.setAttribute('data-bloqueada', 'true'); // Marca la casa como bloqueada
-        }
-    });
-    actualizarContadores();
+            if (bloqueada === 'true') {
+                casa.setAttribute('data-bloqueada', 'true'); // Marca la casa como bloqueada
+            }
+        });
+        actualizarContadores();
+    } catch (error) {
+        console.error('Error al cargar el estado de las casas:', error);
+        alert('Ha ocurrido un error al cargar la página. Revisa la consola para más detalles.');
+    }
 });
+
+
+
 
 // Función para manejar los clics en cada casa
 casas.forEach((casa, index) => {
+
     casa.addEventListener('click', () => {
-        // Verifica si la casa está bloqueada y el estado es 'vendido'
-        if (casa.getAttribute('data-bloqueada') === 'true' && !isAdmin) {
-            alert('Esta casa está bloqueada y solo un administrador puede cambiar su estado.');
-            return; // Sale de la función si la casa está bloqueada
-        }
 
-        // Cambiar el estado de la casa según su clase actual
-        if (casa.classList.contains('disponible')) {
-            casa.classList.remove('disponible');
-            casa.classList.add('reservado');
-            casa.setAttribute('data-status', 'reservado');
-        } else if (casa.classList.contains('reservado')) {
-            casa.classList.remove('reservado');
-            casa.classList.add('vendido');
-            casa.setAttribute('data-status', 'vendido');
-
-            // Bloquear la casa después de cambiar su estado a 'vendido'
-            casa.setAttribute('data-bloqueada', 'true');
-            localStorage.setItem(`bloqueada_${index}`, 'true');
-        } else if (casa.classList.contains('vendido')) {
-            if (isAdmin) {
-                casa.classList.remove('vendido');
-                casa.classList.add('disponible');
-                casa.setAttribute('data-status', 'disponible');
-
-                // Desbloquear la casa si está en modo admin
-                casa.removeAttribute('data-bloqueada');
-                localStorage.removeItem(`bloqueada_${index}`);
+        try {
+            // Verifica si la casa está bloqueada y el estado es 'vendido'
+            if (casa.getAttribute('data-bloqueada') === 'true' && !isAdmin) {
+                alert('Esta casa está bloqueada y solo un administrador puede cambiar su estado.');
+                return; // Sale de la función si la casa está bloqueada
             }
+
+            // Cambiar el estado de la casa según su clase actual
+            if (casa.classList.contains('disponible')) {
+                casa.classList.remove('disponible');
+                casa.classList.add('reservado');
+                casa.setAttribute('data-status', 'reservado');
+            } else if (casa.classList.contains('reservado')) {
+                casa.classList.remove('reservado');
+                casa.classList.add('vendido');
+                casa.setAttribute('data-status', 'vendido');
+
+                // Bloquear la casa después de cambiar su estado a 'vendido'
+                casa.setAttribute('data-bloqueada', 'true');
+                localStorage.setItem(`bloqueada_${index}`, 'true');
+            } else if (casa.classList.contains('vendido')) {
+                if (isAdmin) {
+                    casa.classList.remove('vendido');
+                    casa.classList.add('disponible');
+                    casa.setAttribute('data-status', 'disponible');
+
+                    // Desbloquear la casa si está en modo admin
+                    casa.removeAttribute('data-bloqueada');
+                    localStorage.removeItem(`bloqueada_${index}`);
+                }
+            }
+
+            // Guardar el estado en localStorage
+            localStorage.setItem(`casa_${index}`, casa.getAttribute('data-status'));
+
+            actualizarContadores();
+        } catch (error) {
+            console.error('Error al manejar el clic en la casa:', error);
+            alert('Ha ocurrido un error al procesar la acción. Revisa la consola para más detalles.');
         }
-
-        // Guardar el estado en localStorage
-        localStorage.setItem(`casa_${index}`, casa.getAttribute('data-status'));
-
-        actualizarContadores();
     });
 });
 
@@ -89,9 +104,19 @@ function actualizarContadores() {
     const disponibles = document.querySelectorAll('.disponible').length;
     const reservadas = document.querySelectorAll('.reservado').length;
 
-    document.getElementById('vendidas').innerText = vendidas;
-    document.getElementById('disponibles').innerText = disponibles;
-    document.getElementById('reservadas').innerText = reservadas;
+    const vendidasElement = document.getElementById('vendidas');
+    const disponiblesElement = document.getElementById('disponibles');
+    const reservadasElement = document.getElementById('reservadas');
+
+    if (vendidasElement) {
+        vendidasElement.innerText = vendidas;
+    }
+    if (disponiblesElement) {
+        disponiblesElement.innerText = disponibles;
+    }
+    if (reservadasElement) {
+        reservadasElement.innerText = reservadas;
+    }
 }
 
 // Función para generar el PDF
