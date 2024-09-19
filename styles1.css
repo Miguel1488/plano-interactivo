@@ -1,0 +1,33 @@
+body {
+    position: relative;
+    overflow: hidden;
+    height: 100vh;
+    /* Esto limitará la altura del cuerpo al tamaño de la ventana */
+    background: url('/img/ARQUITECTO.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+
+
+.text-center {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+}
+
+
+.h1 {
+    color: #0D6EFD;
+    font: size 45px;
+    ;
+    font-weight: 1000;
+    /* El número puede variar de 100 a 900, siendo 900 el más grueso. */
+    text-shadow: 
+    -2px -2px 0 #ffffff,  /* Sombra hacia arriba a la izquierda */
+    2px -2px 0 #ffffff,   /* Sombra hacia arriba a la derecha */
+    -2px 2px 0 #ffffff,   /* Sombra hacia abajo a la izquierda */
+    2px 2px 0 #ffffff;    /* Sombra hacia abajo a la derecha */
+}

@@ -1,0 +1,83 @@
+.vendido {
+    fill: red;
+}
+
+.reservado {
+    fill: gray;
+}
+
+.disponible {
+    fill: green;
+}
+
+.container {
+    width: auto;
+  
+}
+
+.container path {
+
+    stroke: rgb(253, 255, 253);
+    stroke-width: 1px;
+
+
+}
+body{
+ 
+    overflow: hidden;
+    height: 100vh; /* Esto limitará la altura del cuerpo al tamaño de la ventana */
+  
+}
+
+
+
+
+.container :hover {
+    stroke: #fbf7f7;
+    stroke-width: 2;
+    cursor: pointer;
+}
+
+
+
+.svg-container {
+    text-align: center;
+    width: 100px;  /* Ajusta el tamaño del contenedor */
+    height: 100px; /* Controla la altura del contenedor */
+    overflow: hidden; /* Controla si el contenido excede el contenedor */
+}
+
+
+.svg-image {
+    position: absolute;
+  
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centra el SVG dentro del contenedor */
+    width: 90%; /* SVG se ajusta al tamaño del contenedor */
+    height: 90%;
+}
+.navbar {
+    position: fixed; /* Fijarlo en la parte superior de la página */
+    top: 0;
+    width: 100%;
+    z-index: 1000; /* Un valor alto para que esté por encima de otros elementos */
+    background-color: #333; /* Ajusta el color según tu estilo */
+    color: white;
+}
+
+.sidebar {
+    position: fixed;
+    top: 7%;
+    left:0;
+    width: 18rem; /* Ajusta el ancho al tamaño de tu card */
+    height: calc(100vh - 0px); /* Resta la altura del navbar para evitar solapamiento */
+    background-color: #0D6EFD; /* Color de fondo si lo deseas */
+    padding: 10px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1); /* Añade sombra para resaltar la barra lateral */
+    overflow-y: auto; /* Para permitir scroll si el contenido excede la altura */
+}
+
+.card {
+    margin-bottom: 20px;
+}
